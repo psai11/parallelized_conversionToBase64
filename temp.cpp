@@ -1,19 +1,22 @@
-#include<bits/stdc++.h>
+#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
+// #define SIZE 1000
   
 // Takes string to be encoded as input
 // and its length and returns encoded string
-string base64Encoder(string input_str, int len_str)
+string base64Encoder(char input_str[], int len_str)
 {
    
     // Character set of base64 encoding scheme
     string char_set = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
       
     // Resultant string
+    // char *res_str tring= (char *) malloc(SIZE * sizeof(char));
     string res_str = "";
-      
+
     int index, no_of_bits = 0, padding = 0, val = 0, count = 0, temp;
-    int i, j;
+    int i, j, k = 0;
       
     // Loop takes 3 characters at a time from
     // input_str and stores it in val
@@ -30,6 +33,7 @@ string base64Encoder(string input_str, int len_str)
                 val = val | input_str[j];
                   
                 // calculates how many time loop
+                // ran if "MEN" -> 3 otherwise "ON" -> 2
                 count++;
               
             }
@@ -60,17 +64,17 @@ string base64Encoder(string input_str, int len_str)
                     index = (val << temp) & 63;
                     no_of_bits = 0;
                 }
-                res_str += (char_set[index]);
+                res_str += char_set[index];
             }
     }
   
     // padding is done here
     for (i = 1; i <= padding; i++)
     {
-        res_str+=('=');
+        res_str += '=';
     }
   
-    res_str+=('\0');
+    res_str += '\0';
   
     return res_str;
   
@@ -80,19 +84,16 @@ string base64Encoder(string input_str, int len_str)
 // Driver code
 int main()
 {
-    string input_str;
-    cout<<"Enter the input string: ";
-    getline(cin, input_str);
+    char input_str[] = "Hello, My Name is Chaitanya";
     int len_str;
-
+  
     // calculates length of string
-    len_str = input_str.size();
+    len_str = sizeof(input_str) / sizeof(input_str[0]);
       
     // to exclude '\0' character
-    // len_str -= 1;
+    len_str -= 1;
   
     cout <<"Input string is : "<< input_str << endl;
     cout <<"Encoded string is : "<< base64Encoder(input_str, len_str)<< endl;
     return 0;
 }
- 
